@@ -1,0 +1,27 @@
+.navbar {
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+}
+
+.nav-links {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  list-style-type: none;
+  margin-inline: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-links li {
+  padding-inline: 0.5rem;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+}
