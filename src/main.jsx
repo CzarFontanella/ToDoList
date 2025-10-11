@@ -1,20 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./global.css";
-import Login from "./pages/Login/Login.jsx";
-import Cadastro from "./pages/Cadastro/Cadastro.jsx";
-import NavBar from "./Components/NavBar/NavBar.jsx";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <header>
-      <NavBar />
-    </header>
-    <main>
-
-    </main>
-    <footer>
-
-    </footer>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </StrictMode>
 );
