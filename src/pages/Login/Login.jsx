@@ -1,28 +1,43 @@
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { db } from "../../../firebase.ts";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 export default function Login({ setUser }) {
 
-  // Mock de usuario
-  const mockUser = {
-    email: "admin@admin",
-    password: "Admin123!"
-  }
-
   const navigate = useNavigate();
 
-  const HandleSubmit = (event) => {
+  const HandleSubmit = async (event) => {
     event.preventDefault();
     // lógica de autenticação aqui
     const email = event.target.email.value;
     const password = event.target.password.value;
     
-    // validação simples com o usuário mock
-    if (email === mockUser.email && password === mockUser.password) {
-      setUser(mockUser);
-      navigate("/", { replace: true });
-    } else {
-      alert("Email ou senha incorretos.");
+    const usersRef = collection(db, "user");
+    const q = query(usersRef, where("email", "==", email)); // Filtrar pelo email
+
+    try {
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        console.error("Email não encontrado");
+        return;
+      }
+
+      // Verificar a senha (caso exista o usuário)
+      querySnapshot.forEach((doc) => {
+        const userData = doc.data();
+        if (userData.password === password) {
+          console.log("Usuário autenticado com sucesso!");
+          setUser(userData);
+          navigate("/");
+          // Aqui, você pode redirecionar o usuário ou armazenar os dados no contexto/global
+        } else {
+          console.error("Senha incorreta");
+        }
+      });
+    } catch (error) {
+      console.error("Erro ao buscar usuário no Firestore: ", error);
     }
   }
 

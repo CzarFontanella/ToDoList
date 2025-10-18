@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./Cadastro.css";
 
+import { db } from "../../../firebase.ts";
+import { collection, addDoc } from "firebase/firestore";
+
+
 export default function Cadastro() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -11,7 +15,18 @@ export default function Cadastro() {
       alert("As senhas não coincidem!");
       return;
     } else {
-      alert("Cadastro realizado com sucesso!");
+
+      addDoc(collection(db, "user"), {
+        nome: e.target.nome.value,
+        email: e.target.email.value,
+        password: password
+      })
+      .then(() => {
+        console.log("Usuário cadastrado com sucesso!");
+      })
+      .catch((error) => {
+        console.error("Erro ao cadastrar usuário: ", error);
+      });
     }
   }
 
