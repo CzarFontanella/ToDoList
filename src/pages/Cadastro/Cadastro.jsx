@@ -59,6 +59,8 @@ export default function Cadastro() {
             </button>
           </div>
         </form>
+
+        <a href="/login">Voltar ao Login</a>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function Home({ auth }) {
-    const [user, setUser] = useState(auth);
+    const [user] = useState(auth);
 
     return(
         <div className="home-container">
